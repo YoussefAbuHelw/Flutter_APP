@@ -35,6 +35,17 @@ class Home extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
+                Navigator.of(context).pushNamed('portfolio');
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.purple,
+                // Changes button color (use any color you want)
+                foregroundColor: Colors.white, // Changes text/icon color
+              ),
+              child: Text("Portfolio"),
+            ),
+            ElevatedButton(
+              onPressed: () {
                 Navigator.of(context).pushNamed('task2');
               },
               style: ElevatedButton.styleFrom(
