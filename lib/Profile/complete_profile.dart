@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-
-void main() {
-  runApp(
-    const MaterialApp(
-      home: CompleteProfileScreen(),
-      debugShowCheckedModeBanner: false,
-    ),
-  );
-}
+import 'package:provider/provider.dart';
+import 'package:sectiontasks/Profile/Show_info.dart';
+import 'package:sectiontasks/Profile/user_profile_model.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
   const CompleteProfileScreen({super.key});
@@ -19,7 +13,7 @@ class CompleteProfileScreen extends StatefulWidget {
 
 class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   final TextEditingController _nameController = TextEditingController(
-    text: "Ahrar Qamar",
+    text: "Youssef Mohamed",
   );
   final TextEditingController _emailController = TextEditingController();
 
@@ -53,6 +47,18 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("Profile completed successfully!")),
+    );
+    Provider.of<UserProfileModel>(context, listen: false).updateProfile(
+      name: _nameController.text,
+      email: _emailController.text,
+      phoneNumber: fullPhoneNumber!,
+      gender: _selectedGender!,
+    );
+    print("Hello After Provider");
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ProfileSummaryScreen()),
     );
   }
 

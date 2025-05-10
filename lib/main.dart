@@ -1,15 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:sectiontasks/Portfolio/ContactScreen.dart';
 import 'package:sectiontasks/Portfolio/Portfolio.dart';
+import 'package:sectiontasks/Profile/user_profile_model.dart';
 import 'package:sectiontasks/home.dart';
 import 'package:sectiontasks/task1.dart';
 import 'package:sectiontasks/task2.dart';
 import 'package:sectiontasks/test.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => UserProfileModel(),
+      child: const MyApp(),
+    ),
+  );
 }
 
+//
+// void main() {
+//   runApp(const MyApp());
+// }
+//
+// void main() {
+//   runApp(
+//     MultiProvider(
+//       providers: [
+//         ChangeNotifierProvider(create: (_) => UserProfileModel()),
+//       ],
+//       child: const MyApp(),
+//     ),
+//   );
+// }
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
