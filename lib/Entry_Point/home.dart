@@ -46,14 +46,14 @@ class Home extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pushNamed('task2');
+                Navigator.of(context).pushNamed('add_item');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.purple,
                 // Changes button color (use any color you want)
                 foregroundColor: Colors.white, // Changes text/icon color
               ),
-              child: Text("Task2"),
+              child: Text("AddItemScreen"),
             ),
           ],
         ),
