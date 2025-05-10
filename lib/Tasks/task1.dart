@@ -4,7 +4,7 @@ import 'package:sectiontasks/Profile/Models/user_model.dart';
 import 'package:sectiontasks/Profile/Profile_page/profile_page.dart';
 import 'package:sectiontasks/Profile/another_Profile/complete_profile.dart';
 import 'package:provider/provider.dart';
-import 'package:sectiontasks/Tasks/task2.dart';
+import 'package:sectiontasks/add_item/add_item_screen.dart';
 
 class Task1 extends StatelessWidget {
   final String title;
@@ -120,7 +120,7 @@ class Task1 extends StatelessWidget {
         onPressed: () {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => Task2()),
+            MaterialPageRoute(builder: (context) => AddItemScreen()),
           );
         },
         child: Icon(Icons.next_plan),
