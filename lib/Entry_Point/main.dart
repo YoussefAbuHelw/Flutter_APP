@@ -1,37 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:sectiontasks/Entry_Point/home.dart';
 import 'package:sectiontasks/Portfolio/ContactScreen.dart';
 import 'package:sectiontasks/Portfolio/Portfolio.dart';
-import 'package:sectiontasks/Profile/user_profile_model.dart';
-import 'package:sectiontasks/home.dart';
-import 'package:sectiontasks/task1.dart';
-import 'package:sectiontasks/task2.dart';
-import 'package:sectiontasks/test.dart';
+import 'package:sectiontasks/Profile/Models/user_model.dart';
+import 'package:sectiontasks/Profile/Models/user_profile_model.dart';
 import 'package:provider/provider.dart';
+import 'package:sectiontasks/Tasks/task1.dart';
+import 'package:sectiontasks/Tasks/task2.dart';
+import 'package:sectiontasks/Tasks/test.dart';
 
+//
+// void main() {
+//   runApp(
+//     ChangeNotifierProvider(
+//       create: (context) => UserModel(),
+//       child: const MyApp(),
+//     ),
+//   );
+// }
+
+// void main() {
+//   runApp(ChangeNotifierProvider(create: (context) => UserProfileModel(),)
+//       ,const MyApp());
+// }
+//
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => UserProfileModel(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProfileModel()),
+        ChangeNotifierProvider(create: (_) => UserModel()),
+      ],
       child: const MyApp(),
     ),
   );
 }
 
-//
-// void main() {
-//   runApp(const MyApp());
-// }
-//
-// void main() {
-//   runApp(
-//     MultiProvider(
-//       providers: [
-//         ChangeNotifierProvider(create: (_) => UserProfileModel()),
-//       ],
-//       child: const MyApp(),
-//     ),
-//   );
-// }
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

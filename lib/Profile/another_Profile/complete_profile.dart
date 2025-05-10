@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
-import 'package:sectiontasks/Profile/Show_info.dart';
-import 'package:sectiontasks/Profile/user_profile_model.dart';
+import 'package:sectiontasks/Profile/Models/user_profile_model.dart';
+import 'package:sectiontasks/Profile/View/Show_info.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
   const CompleteProfileScreen({super.key});
@@ -48,7 +48,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("Profile completed successfully!")),
     );
-    Provider.of<UserProfileModel>(context, listen: false).updateProfile(
+    Provider.of<UserProfileModel>(context).updateProfile(
       name: _nameController.text,
       email: _emailController.text,
       phoneNumber: fullPhoneNumber!,

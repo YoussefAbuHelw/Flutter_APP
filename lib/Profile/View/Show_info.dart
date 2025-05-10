@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sectiontasks/Profile/user_profile_model.dart';
+import 'package:sectiontasks/Profile/Models/user_profile_model.dart';
 
 class ProfileSummaryScreen extends StatelessWidget {
   const ProfileSummaryScreen({super.key});

@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-
-import 'package:sectiontasks/task2.dart';
-import 'package:sectiontasks/Profile/complete_profile.dart';
+import 'package:sectiontasks/Profile/Models/user_model.dart';
+import 'package:sectiontasks/Profile/Profile_page/profile_page.dart';
+import 'package:sectiontasks/Profile/another_Profile/complete_profile.dart';
+import 'package:provider/provider.dart';
+import 'package:sectiontasks/Tasks/task2.dart';
 
 class Task1 extends StatelessWidget {
   final String title;
@@ -18,6 +20,7 @@ class Task1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var profileImage = Provider.of<UserModel>(context).user?.file;
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -25,13 +28,25 @@ class Task1 extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => CompleteProfileScreen(),
-                ),
-                // MaterialPageRoute(builder: (context) => ProfilePage()),
+                // MaterialPageRoute(
+                //   builder: (context) => CompleteProfileScreen(),
+                // ),
+                MaterialPageRoute(builder: (context) => ProfilePage()),
               );
             },
-            icon: Icon(Icons.account_circle_sharp, color: Colors.white),
+            icon:
+                (profileImage == null)
+                    ? Icon(Icons.account_circle_sharp, color: Colors.white)
+                    : CircleAvatar(
+                      child: ClipOval(
+                        child: Image.file(
+                          profileImage,
+                          height: 50,
+                          width: 50,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
           ),
         ],
         title: Text(
@@ -51,21 +66,17 @@ class Task1 extends StatelessWidget {
           children: [
             images!.isEmpty && images != null
                 ? Image.asset(
-              "assets/images/tree.jpg",
-              height: 400,
-              width: MediaQuery
-                  .sizeOf(context)
-                  .width - 20,
-              fit: BoxFit.cover,
-            )
+                  "assets/images/tree.jpg",
+                  height: 400,
+                  width: MediaQuery.sizeOf(context).width - 20,
+                  fit: BoxFit.cover,
+                )
                 : Image.file(
-              images![0],
-              height: 400,
-              width: MediaQuery
-                  .sizeOf(context)
-                  .width - 20,
-              fit: BoxFit.cover,
-            ),
+                  images![0],
+                  height: 400,
+                  width: MediaQuery.sizeOf(context).width - 20,
+                  fit: BoxFit.cover,
+                ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -79,30 +90,29 @@ class Task1 extends StatelessWidget {
             ),
             images!.isEmpty && images != null
                 ? Row(
-              children: [
-                MySeason(url: "assets/images/tree.jpg", text: "Spring"),
-                MySeason(url: "assets/images/tree.jpg", text: "Autumn"),
-              ],
-            )
+                  children: [
+                    MySeason(url: "assets/images/tree.jpg", text: "Spring"),
+                    MySeason(url: "assets/images/tree.jpg", text: "Autumn"),
+                  ],
+                )
                 : SizedBox(
-              height: 500,
-              child: GridView.builder(
-                itemBuilder:
-                    (BuildContext context, int index) =>
-                    Image.file(
-                      images![index],
-                      height: 100,
-                      width: 100,
-                      fit: BoxFit.cover,
+                  height: 500,
+                  child: GridView.builder(
+                    itemBuilder:
+                        (BuildContext context, int index) => Image.file(
+                          images![index],
+                          height: 100,
+                          width: 100,
+                          fit: BoxFit.cover,
+                        ),
+                    itemCount: images!.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
                     ),
-                itemCount: images!.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
+                  ),
                 ),
-              ),
-            ),
           ],
         ),
       ),
@@ -118,7 +128,6 @@ class Task1 extends StatelessWidget {
     );
   }
 }
-
 
 class MySeason extends StatelessWidget {
   final String url;

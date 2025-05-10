@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sectiontasks/task1.dart';
+import 'package:sectiontasks/Tasks/task1.dart';
 
 class Task2 extends StatefulWidget {
   Task2({super.key});
