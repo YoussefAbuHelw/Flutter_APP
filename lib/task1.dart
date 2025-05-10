@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:sectiontasks/Profile/Profile_page/profile_page.dart';
+
 import 'package:sectiontasks/task2.dart';
+import 'package:sectiontasks/Profile/complete_profile.dart';
 
 class Task1 extends StatelessWidget {
   final String title;
@@ -24,7 +25,10 @@ class Task1 extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ProfilePage()),
+                MaterialPageRoute(
+                  builder: (context) => CompleteProfileScreen(),
+                ),
+                // MaterialPageRoute(builder: (context) => ProfilePage()),
               );
             },
             icon: Icon(Icons.account_circle_sharp, color: Colors.white),
@@ -47,17 +51,21 @@ class Task1 extends StatelessWidget {
           children: [
             images!.isEmpty && images != null
                 ? Image.asset(
-                  "assets/images/tree.jpg",
-                  height: 400,
-                  width: MediaQuery.sizeOf(context).width - 20,
-                  fit: BoxFit.cover,
-                )
+              "assets/images/tree.jpg",
+              height: 400,
+              width: MediaQuery
+                  .sizeOf(context)
+                  .width - 20,
+              fit: BoxFit.cover,
+            )
                 : Image.file(
-                  images![0],
-                  height: 400,
-                  width: MediaQuery.sizeOf(context).width - 20,
-                  fit: BoxFit.cover,
-                ),
+              images![0],
+              height: 400,
+              width: MediaQuery
+                  .sizeOf(context)
+                  .width - 20,
+              fit: BoxFit.cover,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -71,29 +79,30 @@ class Task1 extends StatelessWidget {
             ),
             images!.isEmpty && images != null
                 ? Row(
-                  children: [
-                    MySeason(url: "assets/images/tree.jpg", text: "Spring"),
-                    MySeason(url: "assets/images/tree.jpg", text: "Autumn"),
-                  ],
-                )
+              children: [
+                MySeason(url: "assets/images/tree.jpg", text: "Spring"),
+                MySeason(url: "assets/images/tree.jpg", text: "Autumn"),
+              ],
+            )
                 : SizedBox(
-                  height: 500,
-                  child: GridView.builder(
-                    itemBuilder:
-                        (BuildContext context, int index) => Image.file(
-                          images![index],
-                          height: 100,
-                          width: 100,
-                          fit: BoxFit.cover,
-                        ),
-                    itemCount: images!.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
+              height: 500,
+              child: GridView.builder(
+                itemBuilder:
+                    (BuildContext context, int index) =>
+                    Image.file(
+                      images![index],
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
                     ),
-                  ),
+                itemCount: images!.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
                 ),
+              ),
+            ),
           ],
         ),
       ),
@@ -109,6 +118,7 @@ class Task1 extends StatelessWidget {
     );
   }
 }
+
 
 class MySeason extends StatelessWidget {
   final String url;
