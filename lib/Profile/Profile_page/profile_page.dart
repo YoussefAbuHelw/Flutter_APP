@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sectiontasks/General_Widget/Card.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({super.key});
@@ -134,6 +135,19 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
           ),
+          Padding(padding: const EdgeInsets.all(8.0), child: Divider()),
+          ContactCard(
+            icon: Icons.person,
+            iconColor: Colors.deepPurple,
+            title: "Name",
+            subtitle: "Youssef Mohamed",
+          ),
+          ContactCard(
+            icon: Icons.info,
+            iconColor: Colors.deepPurple,
+            title: "Bio",
+            subtitle: "busy",
+          ),
         ],
       ),
     );
@@ -146,15 +160,12 @@ class Options extends StatelessWidget {
     super.key,
     required this.icon,
     required this.title,
-    // this.selectedFile,
   });
 
   final IconData icon;
   final String title;
 
   final VoidCallback onPressed;
-
-  // final File? selectedFile;
 
   @override
   Widget build(BuildContext context) {
