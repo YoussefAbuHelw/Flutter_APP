@@ -8,8 +8,8 @@ class Item {
     required this.isFavorite,
   });
 
-  late File images;
-  late String title;
-  late String body;
-  late bool isFavorite;
+  List<File> images;
+  String title;
+  String body;
+  bool isFavorite;
 }

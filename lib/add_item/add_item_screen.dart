@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:sectiontasks/Tasks/task1.dart';
+import 'package:sectiontasks/add_item/item.dart';
 import 'package:sectiontasks/add_item/item_model.dart';
 
 class AddItemScreen extends StatefulWidget {
@@ -186,17 +187,18 @@ class _AddItemScreenState extends State<AddItemScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).pushNamed('dashboard');
-          // Navigator.pushReplacement(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder:
-          //         (context) => Task1(
-          //           title: title.text,
-          //           body: body.text,
-          //           images: selectedImages,
-          //         ),
-          //   ),
-          // );
+
+          final item = Provider.of<ItemModel>(context, listen: false);
+          item.addItem(
+            Item(
+              images: List.from(item.selectedImages!),
+              title: title.text,
+              body: body.text,
+              isFavorite: false,
+            ),
+          );
+          item.selectedImages!.clear();
+
         },
         child: Icon(Icons.save),
       ),
