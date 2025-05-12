@@ -24,14 +24,14 @@ class Home extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pushNamed('task1');
+                Navigator.of(context).pushNamed('details');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.purple,
                 // Changes button color (use any color you want)
                 foregroundColor: Colors.white, // Changes text/icon color
               ),
-              child: Text("Task1"),
+              child: Text("Details"),
             ),
             ElevatedButton(
               onPressed: () {

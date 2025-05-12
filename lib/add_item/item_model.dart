@@ -29,14 +29,12 @@ class ItemModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<File> allImages(List<Item> items) {
-    List<File> result = [];
-    for (var item in items) {
-      for (var image in item.images) {
-        result.add(image);
-      }
-    }
-    // notifyListeners();
-    return result;
+  Item? _selectedItem;
+
+  Item? get selectedItem => _selectedItem;
+
+  void selectItem(Item item) {
+    _selectedItem = item;
+    notifyListeners();
   }
 }

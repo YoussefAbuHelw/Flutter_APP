@@ -5,13 +5,16 @@ import 'package:sectiontasks/Profile/Profile_page/profile_page.dart';
 import 'package:sectiontasks/Profile/another_Profile/complete_profile.dart';
 import 'package:provider/provider.dart';
 import 'package:sectiontasks/add_item/add_item_screen.dart';
+import 'package:sectiontasks/add_item/item_model.dart';
+import 'package:sectiontasks/favourite/favourite_model.dart';
+import 'package:sectiontasks/items_datails/favourite_widget.dart';
 
-class Task1 extends StatelessWidget {
+class DetailsScreen extends StatelessWidget {
   final String title;
   final String body;
   final List<File>? images;
 
-  const Task1({
+  const DetailsScreen({
     this.images,
     required this.title,
     required this.body,
@@ -20,7 +23,8 @@ class Task1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var profileImage = Provider.of<UserModel>(context).user?.file;
+    final profileImage = Provider.of<UserModel>(context).user?.file;
+    final item = Provider.of<ItemModel>(context);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -50,7 +54,7 @@ class Task1 extends StatelessWidget {
           ),
         ],
         title: Text(
-          title,
+          item.selectedItem!.title,
           style: TextStyle(
             color: Colors.white,
             fontSize: 30,
@@ -64,7 +68,8 @@ class Task1 extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            images!.isEmpty && images != null
+            item.selectedItem!.images.isEmpty &&
+                    item.selectedItem!.images != null
                 ? Image.asset(
                   "assets/images/tree.jpg",
                   height: 400,
@@ -72,7 +77,7 @@ class Task1 extends StatelessWidget {
                   fit: BoxFit.cover,
                 )
                 : Image.file(
-                  images![0],
+                  item.selectedItem!.images.first,
                   height: 400,
                   width: MediaQuery.sizeOf(context).width - 20,
                   fit: BoxFit.cover,
@@ -86,9 +91,13 @@ class Task1 extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Text(textAlign: TextAlign.justify, body),
+              child: Text(
+                textAlign: TextAlign.justify,
+                item.selectedItem!.body,
+              ),
             ),
-            images!.isEmpty && images != null
+            item.selectedItem!.images.isEmpty &&
+                    item.selectedItem!.images != null
                 ? Row(
                   children: [
                     MySeason(url: "assets/images/tree.jpg", text: "Spring"),
@@ -100,12 +109,12 @@ class Task1 extends StatelessWidget {
                   child: GridView.builder(
                     itemBuilder:
                         (BuildContext context, int index) => Image.file(
-                          images![index],
+                          item.selectedItem!.images[index],
                           height: 100,
                           width: 100,
                           fit: BoxFit.cover,
                         ),
-                    itemCount: images!.length,
+                    itemCount: item.selectedItem!.images.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       mainAxisSpacing: 10,
@@ -118,10 +127,11 @@ class Task1 extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => AddItemScreen()),
-          );
+          Navigator.pop(context);
+          // Navigator.pushReplacement(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => AddItemScreen()),
+          // );
         },
         child: Icon(Icons.next_plan),
       ),
@@ -152,28 +162,6 @@ class MySeason extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class FavoriteWidget extends StatefulWidget {
-  const FavoriteWidget({super.key});
-
-  @override
-  State<FavoriteWidget> createState() => _FavoriteWidgetState();
-}
-
-class _FavoriteWidgetState extends State<FavoriteWidget> {
-  bool isFavorite = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        isFavorite = !isFavorite;
-        setState(() {});
-      },
-      icon: Icon(Icons.favorite, color: isFavorite ? Colors.red : Colors.grey),
     );
   }
 }
