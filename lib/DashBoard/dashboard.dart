@@ -1,11 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sectiontasks/Profile/Models/user_model.dart';
 import 'package:sectiontasks/Profile/Profile_page/profile_page.dart';
 import 'package:sectiontasks/add_item/item.dart';
 import 'package:sectiontasks/add_item/item_model.dart';
+import 'package:sectiontasks/favourite/favourite_model.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -13,9 +12,7 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profileImage = Provider.of<UserModel>(context).user?.file;
-    final items = Provider.of<ItemModel>(context);
-    List<File> images = items.allImages(items.items);
-
+    final favItems = Provider.of<FavouriteModel>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -55,38 +52,75 @@ class DashboardScreen extends StatelessWidget {
                 crossAxisSpacing: 10,
               ),
 
-              // itemCount: items.items.length,
-              itemCount: images.length,
+              // itemCount: images.length,
+              itemCount: items.items.length,
               itemBuilder: (context, index) {
-                // final file = items.allImages(items.items)[index];
-
                 return SingleChildScrollView(
                   child: InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, 'task1');
+                      items.selectItem(
+                        Item(
+                          images: items.items[index].images,
+                          title: items.items[index].title,
+                          body: items.items[index].body,
+                          isFavorite: items.items[index].isFavorite,
+                        ),
+                      );
+                      Navigator.pushNamed(context, 'details');
                     },
-                    child: SizedBox(
+                    child: Card(
+                      margin: EdgeInsets.all(8),
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Image.file(
-                            images[index],
-                            // items.items[index].images[index],
-                            height: 200,
-                            width: 200,
+                          ClipRRect(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(12),
+                            ),
+                            child: Image.file(
+                              items.items[index].images.first,
+                              height: 100,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                          // Padding(
-                          //   padding: const EdgeInsets.all(8.0),
-                          //   child: Row(
-                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //     children: [
-                          //       Text(items.items[index].title),
-                          //       IconButton(
-                          //         onPressed: () {},
-                          //         icon: Icon(Icons.favorite),
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    items.items[index].title,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    favItems.isFavorite(items.items[index]);
+                                  },
+                                  icon: Icon(
+                                    Icons.favorite,
+                                    color:
+                                        favItems.favList.contains(
+                                              items.items[index],
+                                            )
+                                            ? Colors.red
+                                            : Colors.grey.shade400,
+
+                                    size: 30,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -102,30 +136,5 @@ class DashboardScreen extends StatelessWidget {
         child: Icon(Icons.add),
       ),
     );
-    print(getLength(items.items));
-  }
-
-  int getLength(List<Item> items) {
-    int length = 0;
-    for (var item in items) {
-      for (var image in item.images) {
-        length++;
-      }
-    }
-    return length;
-  }
-
-  List<File> imagesArray(List<Item> items) {
-    List<File> imageFile = [];
-    for (var image in items) {
-      for (var i in image.images) {
-        imageFile.add(i);
-      }
-    }
-    return imageFile;
-  }
-
-  void printImage(List<Item> items) {
-    print("length ya youssef: ${getLength(items)}");
   }
 }
