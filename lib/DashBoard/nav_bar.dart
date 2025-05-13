@@ -3,6 +3,7 @@ import 'package:sectiontasks/DashBoard/dashboard.dart';
 import 'package:sectiontasks/Profile/Profile_page/profile_page.dart';
 import 'package:sectiontasks/Setting/setting_screen.dart';
 import 'package:sectiontasks/favourite/favourite_screen.dart';
+import 'package:sectiontasks/quote/quote_screen.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -22,6 +23,7 @@ class _NavBarState extends State<NavBar> {
             DashboardScreen(),
             ProfilePage(),
             SettingsScreen(),
+            QuoteScreen(),
             FavouriteScreen(),
           ][_selectedIndex],
       bottomNavigationBar: NavigationBar(
@@ -37,6 +39,10 @@ class _NavBarState extends State<NavBar> {
           ),
           NavigationDestination(icon: Icon(Icons.person), label: "Profile"),
           NavigationDestination(icon: Icon(Icons.settings), label: "Settings"),
+          NavigationDestination(
+            icon: Icon(Icons.format_quote),
+            label: "Quotes",
+          ),
           NavigationDestination(
             icon: Icon(Icons.favorite),
             label: "Favourites",
