@@ -13,26 +13,22 @@ import 'package:sectiontasks/add_item/item_model.dart';
 import 'package:sectiontasks/favourite/favourite_model.dart';
 import 'package:sectiontasks/items_datails/details_screen.dart';
 
-//
-// void main() {
-//   runApp(
-//     ChangeNotifierProvider(
-//       create: (context) => UserModel(),
-//       child: const MyApp(),
-//     ),
-//   );
-// }
+import '../Light_Dark/theme_model.dart';
+import '../Light_Dark/theme_view_model.dart';
+import '../Sign_up/signup_screen.dart';
+import '../Sign_up/signup_view_model.dart';
+import '../Splash/SplashScreen.dart';
+import '../login/login_screen.dart';
+import '../login/login_view_model.dart';
 
-// void main() {
-//   runApp(ChangeNotifierProvider(create: (context) => UserProfileModel(),)
-//       ,const MyApp());
-// }
-//
 void main() {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => SignUpViewModel()),
+        ChangeNotifierProvider(create: (_) => LoginViewModel()),
         ChangeNotifierProvider(create: (_) => UserProfileModel()),
+        ChangeNotifierProvider(create: (_) => ThemeViewModel(ThemeModel())),
         ChangeNotifierProvider(create: (_) => UserModel()),
         ChangeNotifierProvider(create: (_) => ItemModel()),
         ChangeNotifierProvider(create: (_) => FavouriteModel()),
@@ -47,9 +43,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeViewModel = context.watch<ThemeViewModel>();
+
     return MaterialApp(
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: themeViewModel.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+
       debugShowCheckedModeBanner: false,
-      initialRoute: 'nav_bar',
+      initialRoute: 'splash',
       routes: {
         'details':
             (context) => DetailsScreen(
@@ -65,6 +67,9 @@ class MyApp extends StatelessWidget {
         'test': (context) => Test(),
         'dashboard': (context) => DashboardScreen(),
         'nav_bar': (context) => NavBar(),
+        'login': (context) => LoginScreen(),
+        'signup': (context) => SignUpScreen(),
+        'splash': (context) => SplashScreen(),
       },
     );
   }
