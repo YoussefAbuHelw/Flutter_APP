@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:sectiontasks/Sign_up/signup_view_model.dart';
 
+import '../Profile/Models/user_model.dart';
+import '../Profile/Profile_page/profile_page.dart';
 import '../login/login_screen.dart';
 import '../login/login_view_model.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
   @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  @override
   Widget build(BuildContext context) {
+    final userModel = Provider.of<UserModel>(context);
     return ChangeNotifierProvider(
       create: (_) => SignUpViewModel(),
       child: Scaffold(
@@ -47,12 +56,194 @@ class SignUpScreen extends StatelessWidget {
                           backgroundColor: Theme.of(
                             context,
                           ).colorScheme.primary.withOpacity(0.2),
-                          child: Icon(
-                            Icons.person_add,
-                            size: 50,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+                          backgroundImage:
+                              userModel.user?.file != null
+                                  ? FileImage(
+                                    userModel.user!.file!,
+                                  ) // Display the selected image
+                                  : null, // No image, so fallback to child
+                          child:
+                              userModel.user?.file == null
+                                  ? IconButton(
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        builder:
+                                            (context) => SizedBox(
+                                              height: 150,
+                                              child: Column(
+                                                children: [
+                                                  const Text(
+                                                    "Profile",
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20,
+                                                    ),
+                                                  ),
+                                                  const Divider(),
+                                                  Expanded(
+                                                    child: SingleChildScrollView(
+                                                      scrollDirection:
+                                                          Axis.horizontal,
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: [
+                                                          Options(
+                                                            onPressed: () {
+                                                              userModel
+                                                                  .imageSelector(
+                                                                    ImageSource
+                                                                        .camera,
+                                                                  );
+                                                              setState(() {
+                                                                Navigator.pop(
+                                                                  context,
+                                                                );
+                                                              });
+                                                            },
+                                                            icon:
+                                                                Icons
+                                                                    .camera_alt,
+                                                            title: "Camera",
+                                                          ),
+                                                          Options(
+                                                            onPressed: () {
+                                                              userModel
+                                                                  .imageSelector(
+                                                                    ImageSource
+                                                                        .gallery,
+                                                                  );
+                                                              setState(() {
+                                                                Navigator.pop(
+                                                                  context,
+                                                                );
+                                                              });
+                                                            },
+                                                            icon: Icons.image,
+                                                            title: "Gallery",
+                                                          ),
+                                                          if (userModel
+                                                                  .user
+                                                                  ?.file !=
+                                                              null)
+                                                            Options(
+                                                              onPressed: () {
+                                                                userModel
+                                                                    .removeImage();
+                                                                Navigator.pop(
+                                                                  context,
+                                                                );
+                                                              },
+                                                              icon:
+                                                                  Icons.delete,
+                                                              title: "Delete",
+                                                            ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.person_add,
+                                      size: 50,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                  )
+                                  : null, // if image is shown, no child on top
                         ),
+                        // CircleAvatar(
+                        //   radius: 60,
+                        //   backgroundColor: Theme.of(
+                        //     context,
+                        //   ).colorScheme.primary.withOpacity(0.2),
+                        //   child: IconButton(
+                        //     onPressed: () {
+                        //       showModalBottomSheet(
+                        //         context: context,
+                        //         builder:
+                        //             (context) => SizedBox(
+                        //               height: 150,
+                        //               child: Column(
+                        //                 children: [
+                        //                   Text(
+                        //                     "Profile",
+                        //                     style: TextStyle(
+                        //                       // fontSize: 25,
+                        //                       fontWeight: FontWeight.bold,
+                        //                     ),
+                        //                   ),
+                        //                   Divider(),
+                        //                   Expanded(
+                        //                     // Added Expanded to take available space
+                        //                     child: SingleChildScrollView(
+                        //                       // Added scroll view
+                        //                       scrollDirection: Axis.horizontal,
+                        //                       // Set horizontal scroll
+                        //                       child: Row(
+                        //                         mainAxisAlignment:
+                        //                             MainAxisAlignment
+                        //                                 .spaceEvenly,
+                        //                         children: [
+                        //                           Options(
+                        //                             onPressed: () {
+                        //                               userModel.imageSelector(
+                        //                                 ImageSource.camera,
+                        //                               );
+                        //                               setState(() {
+                        //                                 Navigator.pop(context);
+                        //                               });
+                        //                             },
+                        //                             icon: Icons.camera_alt,
+                        //                             title: "camera",
+                        //                           ),
+                        //                           Options(
+                        //                             onPressed: () {
+                        //                               userModel.imageSelector(
+                        //                                 ImageSource.gallery,
+                        //                               );
+                        //                               setState(() {
+                        //                                 Navigator.pop(context);
+                        //                               });
+                        //                             },
+                        //                             icon: Icons.image,
+                        //                             title: "Gallery",
+                        //                           ),
+                        //                           if (userModel.user?.file !=
+                        //                               null)
+                        //                             Options(
+                        //                               onPressed: () {
+                        //                                 userModel.removeImage();
+                        //                                 Navigator.pop(context);
+                        //                               },
+                        //                               icon: Icons.delete,
+                        //                               title: "delete",
+                        //                               // selectedFile: selectedFile,
+                        //                             ),
+                        //                         ],
+                        //                       ),
+                        //                     ),
+                        //                   ),
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //       );
+                        //     },
+                        //     icon: Icon(
+                        //       Icons.person_add,
+                        //       size: 50,
+                        //       color: Theme.of(context).colorScheme.primary,
+                        //     ),
+                        //
+                        //   ),
+                        // ),
                         const SizedBox(height: 24),
                         Text(
                           'Create your account',
@@ -150,54 +341,6 @@ class SignUpScreen extends StatelessWidget {
   }
 
   // Widget _buildSignUpButton(BuildContext context, SignUpViewModel viewModel) {
-  //   return SizedBox(
-  //     width: double.infinity,
-  //     height: 50,
-  //     child: ElevatedButton(
-  //       onPressed: () async {
-  //         bool x = await viewModel.submit(() {
-  //           print('Registered User:');
-  //           print('Name: ${viewModel.user.name}');
-  //           print('Email: ${viewModel.user.email}');
-  //           ScaffoldMessenger.of(context)
-  //             ..removeCurrentSnackBar()
-  //             ..showSnackBar(
-  //               SnackBar(
-  //                 content: Text(
-  //                   viewModel.errorMessage ?? 'Registration successful!',
-  //                   style: TextStyle(color: Colors.white),
-  //                 ),
-  //                 behavior: SnackBarBehavior.floating,
-  //                 shape: RoundedRectangleBorder(
-  //                   borderRadius: BorderRadius.circular(10),
-  //                 ),
-  //                 backgroundColor: Theme.of(context).colorScheme.primary,
-  //                 duration: Duration(seconds: 2),
-  //               ),
-  //             );
-  //         });
-  //         if (x) {
-  //           Navigator.pushReplacement(
-  //             context,
-  //             MaterialPageRoute(builder: (context) => LoginScreen()),
-  //           );
-  //         }
-  //       },
-  //       style: ElevatedButton.styleFrom(
-  //         shape: RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.circular(12),
-  //         ),
-  //         elevation: 4,
-  //         textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-  //         padding: const EdgeInsets.symmetric(vertical: 14),
-  //         backgroundColor: Theme.of(context).colorScheme.primary,
-  //         foregroundColor: Theme.of(context).colorScheme.onPrimary,
-  //       ),
-  //       child: const Text('Sign Up'),
-  //     ),
-  //   );
-  // }
-
   Widget _buildSignUpButton(BuildContext context, SignUpViewModel viewModel) {
     return SizedBox(
       width: double.infinity,

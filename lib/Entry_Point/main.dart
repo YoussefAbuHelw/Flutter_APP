@@ -13,6 +13,7 @@ import 'package:sectiontasks/add_item/item_model.dart';
 import 'package:sectiontasks/favourite/favourite_model.dart';
 import 'package:sectiontasks/items_datails/details_screen.dart';
 
+import '../Light_Dark/Theme.dart';
 import '../Light_Dark/theme_model.dart';
 import '../Light_Dark/theme_view_model.dart';
 import '../Sign_up/signup_screen.dart';
@@ -20,6 +21,7 @@ import '../Sign_up/signup_view_model.dart';
 import '../Splash/SplashScreen.dart';
 import '../login/login_screen.dart';
 import '../login/login_view_model.dart';
+import '../login/shared_prefs_service.dart';
 
 void main() {
   runApp(
@@ -28,10 +30,12 @@ void main() {
         ChangeNotifierProvider(create: (_) => SignUpViewModel()),
         ChangeNotifierProvider(create: (_) => LoginViewModel()),
         ChangeNotifierProvider(create: (_) => UserProfileModel()),
-        ChangeNotifierProvider(create: (_) => ThemeViewModel(ThemeModel())),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        // ChangeNotifierProvider(create: (_) => ThemeViewModel(ThemeModel())),
         ChangeNotifierProvider(create: (_) => UserModel()),
         ChangeNotifierProvider(create: (_) => ItemModel()),
         ChangeNotifierProvider(create: (_) => FavouriteModel()),
+        ChangeNotifierProvider(create: (_) => SharedPrefsService()),
       ],
       child: const MyApp(),
     ),
@@ -43,12 +47,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeViewModel = context.watch<ThemeViewModel>();
+    // final themeProvider = context.watch<ThemeProvider>();
+    final _prefsService = context.watch<SharedPrefsService>();
+    // final _prefsService = SharedPrefsService();
 
+
+    print(_prefsService.isDarkMode);
     return MaterialApp(
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      themeMode: themeViewModel.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      themeMode: _prefsService.isDarkMode ? ThemeMode.dark : ThemeMode.light,
 
       debugShowCheckedModeBanner: false,
       initialRoute: 'splash',

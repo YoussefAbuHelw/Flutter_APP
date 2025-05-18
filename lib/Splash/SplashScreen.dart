@@ -25,6 +25,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (loggedIn) {
       User? user = await _prefsService.getUser();
+      print(user?.name);
+      print(user?.email);
+      print(user?.password);
       if (user != null) {
         // Navigate to dashboard or home screen, passing user if needed
         Navigator.pushReplacementNamed(context, 'nav_bar');

@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Sign_up/user.dart';
 
-class SharedPrefsService {
+class SharedPrefsService extends ChangeNotifier {
   static const _isLoggedInKey = 'is_logged_in';
   static const _nameKey = 'user_name';
   static const _emailKey = 'user_email';
@@ -23,8 +24,10 @@ class SharedPrefsService {
     final password = prefs.getString(_passwordKey);
 
     if (name != null && email != null && password != null) {
+      notifyListeners();
       return User(name: name, email: email, password: password);
     }
+    notifyListeners();
     return null;
   }
 
@@ -35,12 +38,43 @@ class SharedPrefsService {
 
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
+    await prefs.remove(_nameKey);
+    await prefs.remove(_isLoggedInKey);
+    await prefs.remove(_emailKey);
+    await prefs.remove(_passwordKey);
   }
+
   //
 
   Future<void> setLoggedIn(bool value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('is_logged_in', value);
+  }
+
+
+
+  bool _isDarkMode = false;
+
+  bool get isDarkMode => _isDarkMode;
+
+  SharedPrefsService() {
+    _loadThemeFromPrefs();
+  }
+
+  void toggleTheme() {
+    _isDarkMode = !_isDarkMode;
+    _saveThemeToPrefs();
+    notifyListeners();
+  }
+
+  void _loadThemeFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _isDarkMode = prefs.getBool('isDarkMode') ?? false;
+    notifyListeners();
+  }
+
+  void _saveThemeToPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isDarkMode', _isDarkMode);
   }
 }

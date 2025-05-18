@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sectiontasks/quote/API_Service.dart';
 import 'package:sectiontasks/quote/quote_model.dart';
 
-import '../Light_Dark/theme_view_model.dart';
+import '../login/shared_prefs_service.dart';
 
 class QuoteScreen extends StatefulWidget {
   const QuoteScreen({super.key});
@@ -23,7 +23,8 @@ class _QuoteScreenState extends State<QuoteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeViewModel = context.watch<ThemeViewModel>();
+    // final themeViewModel = context.watch<ThemeViewModel>();
+    final _prefsService = context.watch<SharedPrefsService>();
 
     return Scaffold(
       appBar: AppBar(title: Text("Quotes"), centerTitle: true),
@@ -51,7 +52,7 @@ class _QuoteScreenState extends State<QuoteScreen> {
                             snapshot.data![index].quote!,
                             style: TextStyle(
                               color:
-                                  themeViewModel.isDarkMode
+                                  _prefsService.isDarkMode
                                       ? Colors.black
                                       : Colors.black,
                             ),
@@ -63,7 +64,7 @@ class _QuoteScreenState extends State<QuoteScreen> {
                             snapshot.data![index].author!,
                             style: TextStyle(
                               color:
-                                  themeViewModel.isDarkMode
+                                  _prefsService.isDarkMode
                                       ? Colors.black
                                       : Colors.black,
                             ),
@@ -75,7 +76,7 @@ class _QuoteScreenState extends State<QuoteScreen> {
                             snapshot.data![index].category!,
                             style: TextStyle(
                               color:
-                                  themeViewModel.isDarkMode
+                                  _prefsService.isDarkMode
                                       ? Colors.black
                                       : Colors.black,
                             ),

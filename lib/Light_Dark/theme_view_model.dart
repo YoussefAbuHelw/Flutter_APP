@@ -9,6 +9,7 @@ class ThemeViewModel extends ChangeNotifier {
 
   ThemeViewModel(this._model) {
     _loadTheme();
+    notifyListeners();
   }
 
   void _loadTheme() async {

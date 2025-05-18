@@ -21,13 +21,6 @@ class LoginViewModel extends ChangeNotifier {
       return false;
     }
 
-    // // Simulated login logic
-    // // In real apps, fetch users from DB or API
-    // var storedUser = User(
-    //   name: 'Test User',
-    //   email: 'test@example.com',
-    //   password: '123456',
-    // );
 
     var storedUser = await _prefsService.getUser();
 

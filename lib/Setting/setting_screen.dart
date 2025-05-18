@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../Light_Dark/Theme.dart';
 import '../Light_Dark/theme_view_model.dart';
 import '../login/shared_prefs_service.dart';
 
@@ -9,8 +10,9 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeViewModel = context.watch<ThemeViewModel>();
-    final _prefsService = SharedPrefsService();
+    // final themeProvider = context.watch<ThemeProvider>();
+    // final _prefsService = SharedPrefsService();
+    final _prefsService = context.watch<SharedPrefsService>();
 
     String selectedLanguage = 'English'; // Static for UI test
 
@@ -22,8 +24,8 @@ class SettingsScreen extends StatelessWidget {
           // Dark Mode Toggle
           SwitchListTile(
             title: const Text('Dark Mode'),
-            value: themeViewModel.isDarkMode,
-            onChanged: themeViewModel.toggleTheme, // Disabled for testing
+            value: _prefsService.isDarkMode,
+            onChanged: (_) => _prefsService.toggleTheme(),// Disabled for testing
           ),
           SizedBox(height: 20),
 
