@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sectiontasks/quote/API_Service.dart';
 import 'package:sectiontasks/quote/quote_model.dart';
+
+import '../Light_Dark/theme_view_model.dart';
 
 class QuoteScreen extends StatefulWidget {
   const QuoteScreen({super.key});
@@ -20,6 +23,8 @@ class _QuoteScreenState extends State<QuoteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeViewModel = context.watch<ThemeViewModel>();
+
     return Scaffold(
       appBar: AppBar(title: Text("Quotes"), centerTitle: true),
       body: Container(
@@ -42,15 +47,39 @@ class _QuoteScreenState extends State<QuoteScreen> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(snapshot.data![index].quote!),
+                          child: Text(
+                            snapshot.data![index].quote!,
+                            style: TextStyle(
+                              color:
+                                  themeViewModel.isDarkMode
+                                      ? Colors.black
+                                      : Colors.black,
+                            ),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(snapshot.data![index].author!),
+                          child: Text(
+                            snapshot.data![index].author!,
+                            style: TextStyle(
+                              color:
+                                  themeViewModel.isDarkMode
+                                      ? Colors.black
+                                      : Colors.black,
+                            ),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(snapshot.data![index].category!),
+                          child: Text(
+                            snapshot.data![index].category!,
+                            style: TextStyle(
+                              color:
+                                  themeViewModel.isDarkMode
+                                      ? Colors.black
+                                      : Colors.black,
+                            ),
+                          ),
                         ),
                       ],
                     ),
