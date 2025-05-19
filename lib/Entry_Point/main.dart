@@ -19,6 +19,7 @@ import '../Light_Dark/theme_view_model.dart';
 import '../Sign_up/signup_screen.dart';
 import '../Sign_up/signup_view_model.dart';
 import '../Splash/SplashScreen.dart';
+import '../Splash/Welcome_screen.dart';
 import '../login/login_screen.dart';
 import '../login/login_view_model.dart';
 import '../login/shared_prefs_service.dart';
@@ -47,10 +48,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final themeProvider = context.watch<ThemeProvider>();
     final _prefsService = context.watch<SharedPrefsService>();
-    // final _prefsService = SharedPrefsService();
-
 
     print(_prefsService.isDarkMode);
     return MaterialApp(
@@ -78,6 +76,8 @@ class MyApp extends StatelessWidget {
         'login': (context) => LoginScreen(),
         'signup': (context) => SignUpScreen(),
         'splash': (context) => SplashScreen(),
+        'splash_screen': (context) => SplashScreen(),
+        'welcome_screen': (context) => WelcomeScreen(),
       },
     );
   }
