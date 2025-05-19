@@ -23,7 +23,6 @@ class _QuoteScreenState extends State<QuoteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final themeViewModel = context.watch<ThemeViewModel>();
     final _prefsService = context.watch<SharedPrefsService>();
 
     return Scaffold(
