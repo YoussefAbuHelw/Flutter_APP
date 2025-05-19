@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../Light_Dark/Theme.dart';
-import '../Light_Dark/theme_view_model.dart';
 import '../login/shared_prefs_service.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -10,8 +8,6 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final themeProvider = context.watch<ThemeProvider>();
-    // final _prefsService = SharedPrefsService();
     final _prefsService = context.watch<SharedPrefsService>();
 
     String selectedLanguage = 'English'; // Static for UI test
@@ -25,7 +21,7 @@ class SettingsScreen extends StatelessWidget {
           SwitchListTile(
             title: const Text('Dark Mode'),
             value: _prefsService.isDarkMode,
-            onChanged: (_) => _prefsService.toggleTheme(),// Disabled for testing
+            onChanged: (_) => _prefsService.toggleTheme(),
           ),
           SizedBox(height: 20),
 
@@ -56,7 +52,7 @@ class SettingsScreen extends StatelessWidget {
           ElevatedButton.icon(
             onPressed: () {
               _prefsService.logout();
-              Navigator.pushReplacementNamed(context, 'signup');
+              Navigator.pushReplacementNamed(context, 'welcome_screen');
             }, // Disabled for testing
             icon: Icon(Icons.logout),
             label: Text('Logout'),
