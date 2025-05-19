@@ -19,25 +19,20 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _checkLoginStatus() async {
     // Optional: Add a short delay to show splash screen nicely
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 10));
 
     bool loggedIn = await _prefsService.isLoggedIn();
 
     if (loggedIn) {
       User? user = await _prefsService.getUser();
-      print(user?.name);
-      print(user?.email);
-      print(user?.password);
+
       if (user != null) {
-        // Navigate to dashboard or home screen, passing user if needed
         Navigator.pushReplacementNamed(context, 'nav_bar');
       } else {
-        // User data not found, treat as logged out
-        Navigator.pushReplacementNamed(context, 'signup');
+        Navigator.pushReplacementNamed(context, 'welcome_screen');
       }
     } else {
-      // Not logged in
-      Navigator.pushReplacementNamed(context, 'signup');
+      Navigator.pushReplacementNamed(context, 'welcome_screen');
     }
   }
 
