@@ -49,7 +49,6 @@ class SignUpViewModel extends ChangeNotifier {
 
       try {
         await _prefsService.saveUser(user); // Save user in SharedPreferences
-        // await _prefsService.setLoggedIn(true); // Set login status true
         errorMessage = null;
         notifyListeners();
         return true;
